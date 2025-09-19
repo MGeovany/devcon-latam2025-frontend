@@ -11,6 +11,9 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
+    WORKOS_API_KEY: z.string().min(1),
+    WORKOS_CLIENT_ID: z.string().min(1),
+    WORKOS_COOKIE_PASSWORD: z.string().min(1),
   },
 
   /**
@@ -19,7 +22,7 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_WORKOS_REDIRECT_URI: z.string().url(),
   },
 
   /**
@@ -29,7 +32,10 @@ export const env = createEnv({
   runtimeEnv: {
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,
-    // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
+    WORKOS_API_KEY: process.env.WORKOS_API_KEY,
+    WORKOS_CLIENT_ID: process.env.WORKOS_CLIENT_ID,
+    WORKOS_COOKIE_PASSWORD: process.env.WORKOS_COOKIE_PASSWORD,
+    NEXT_PUBLIC_WORKOS_REDIRECT_URI: process.env.NEXT_PUBLIC_WORKOS_REDIRECT_URI,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

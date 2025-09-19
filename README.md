@@ -1,29 +1,71 @@
-# Create T3 App
+# ABC Kids - English Learning Platform
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+A minimalist children's English learning platform with WorkOS authentication.
 
-## What's next? How do I make an app with this?
+## Features
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- 🎨 Minimalist black and white design
+- 🔐 WorkOS authentication integration
+- 📱 Responsive design
+- 👶 Child-friendly interface
+- 🎯 Clean and simple UI
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+## Setup
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+1. **Install dependencies:**
+   ```bash
+   pnpm install
+   ```
 
-## Learn More
+2. **Set up environment variables:**
+   Create a `.env.local` file with the following variables:
+   ```env
+   # Database
+   DATABASE_URL="postgresql://username:password@localhost:5432/database_name"
+   
+   # WorkOS Configuration
+   WORKOS_API_KEY="sk_test_your_api_key_here"
+   WORKOS_CLIENT_ID="client_your_client_id_here"
+   WORKOS_COOKIE_PASSWORD="your-secure-password-here-please-change-this"
+   NEXT_PUBLIC_WORKOS_REDIRECT_URI="http://localhost:3000/callback"
+   ```
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+3. **Set up the database:**
+   ```bash
+   pnpm db:push
+   ```
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+4. **Run the development server:**
+   ```bash
+   pnpm dev
+   ```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+## WorkOS Configuration
 
-## How do I deploy this?
+1. Go to your [WorkOS Dashboard](https://dashboard.workos.com/)
+2. Create a new SSO connection
+3. Set the redirect URI to `http://localhost:3000/callback`
+4. Copy your API key and Client ID to the environment variables
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+## Tech Stack
+
+- [Next.js 15](https://nextjs.org/) - React framework
+- [TypeScript](https://www.typescriptlang.org/) - Type safety
+- [Tailwind CSS](https://tailwindcss.com/) - Styling
+- [Prisma](https://www.prisma.io/) - Database ORM
+- [WorkOS](https://workos.com/) - Authentication
+- [Poppins Font](https://fonts.google.com/specimen/Poppins) - Typography
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── callback/          # WorkOS callback page
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx           # Login page
+├── lib/
+│   └── workos.ts          # WorkOS client
+└── styles/
+    └── globals.css        # Global styles
+```
