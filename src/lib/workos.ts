@@ -1,25 +1,37 @@
-import { env } from "~/env.js";
-
 export class WorkOSClient {
   private apiKey: string;
   private clientId: string;
   private redirectUri: string;
 
   constructor() {
-    this.apiKey = env.WORKOS_API_KEY;
-    this.clientId = env.WORKOS_CLIENT_ID;
-    this.redirectUri = env.NEXT_PUBLIC_WORKOS_REDIRECT_URI;
+    // Server-side only - these should not be accessed on client
+    this.apiKey = process.env.WORKOS_API_KEY || "";
+    this.clientId = process.env.WORKOS_CLIENT_ID || "";
+    this.redirectUri = process.env.NEXT_PUBLIC_WORKOS_REDIRECT_URI || "";
+
+    console.log("WorkOSClient constructor called");
+    console.log("API Key exists:", !!this.apiKey);
+    console.log("Client ID exists:", !!this.clientId);
+    console.log("Redirect URI exists:", !!this.redirectUri);
   }
 
   /**
    * Generate the WorkOS authorization URL (client-side safe)
    */
   static getAuthorizationUrl(state?: string): string {
+    console.log("getAuthorizationUrl called with state:", state);
+
     const clientId = process.env.NEXT_PUBLIC_WORKOS_CLIENT_ID;
     const redirectUri = process.env.NEXT_PUBLIC_WORKOS_REDIRECT_URI;
-    
+
+    console.log("Environment variables:");
+    console.log("NEXT_PUBLIC_WORKOS_CLIENT_ID:", clientId);
+    console.log("NEXT_PUBLIC_WORKOS_REDIRECT_URI:", redirectUri);
+
     if (!clientId || !redirectUri) {
-      console.warn("WorkOS not configured. Please set NEXT_PUBLIC_WORKOS_CLIENT_ID and NEXT_PUBLIC_WORKOS_REDIRECT_URI");
+      console.warn(
+        "WorkOS not configured. Please set NEXT_PUBLIC_WORKOS_CLIENT_ID and NEXT_PUBLIC_WORKOS_REDIRECT_URI",
+      );
       // Return a placeholder URL that shows an error
       return "/?error=workos_not_configured";
     }
@@ -31,7 +43,10 @@ export class WorkOSClient {
       ...(state && { state }),
     });
 
-    return `https://api.workos.com/sso/authorize?${params.toString()}`;
+    const authUrl = `https://api.workos.com/sso/authorize?${params.toString()}`;
+    console.log("Generated auth URL:", authUrl);
+
+    return authUrl;
   }
 
   /**

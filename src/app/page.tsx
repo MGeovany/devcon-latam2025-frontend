@@ -8,14 +8,21 @@ export default function HomePage() {
   const error = searchParams.get("error");
   const success = searchParams.get("success");
 
+  console.log("HomePage rendered with error:", error, "success:", success);
+
   const handleWorkOSLogin = () => {
+    console.log("WorkOS login button clicked");
+    
     // Generate a random state for security
     const state = Math.random().toString(36).substring(2, 15);
+    console.log("Generated state:", state);
     
     // Get the WorkOS authorization URL
     const authUrl = WorkOSClient.getAuthorizationUrl(state);
+    console.log("Auth URL from WorkOSClient:", authUrl);
     
     // Redirect to WorkOS or show error
+    console.log("Redirecting to:", authUrl);
     window.location.href = authUrl;
   };
 
@@ -26,13 +33,13 @@ export default function HomePage() {
         {error && (
           <div className="mb-4 rounded-lg border-2 border-red-500 bg-red-50 p-4 text-center">
             <p className="text-red-700">
-              {error === "workos_not_configured" 
+              {error === "workos_not_configured"
                 ? "WorkOS not configured. Please set up environment variables."
                 : "Authentication failed. Please try again."}
             </p>
           </div>
         )}
-        
+
         {success && (
           <div className="mb-4 rounded-lg border-2 border-green-500 bg-green-50 p-4 text-center">
             <p className="text-green-700">Authentication successful!</p>
