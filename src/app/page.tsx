@@ -1,6 +1,6 @@
 "use client";
 
-import { workos } from "~/lib/workos";
+import { WorkOSClient } from "~/lib/workos";
 
 export default function HomePage() {
   const handleWorkOSLogin = () => {
@@ -8,7 +8,7 @@ export default function HomePage() {
     const state = Math.random().toString(36).substring(2, 15);
     
     // Get the WorkOS authorization URL
-    const authUrl = workos.getAuthorizationUrl(state);
+    const authUrl = WorkOSClient.getAuthorizationUrl(state);
     
     // Redirect to WorkOS
     window.location.href = authUrl;

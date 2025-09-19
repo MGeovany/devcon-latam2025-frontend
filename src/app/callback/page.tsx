@@ -8,7 +8,9 @@ interface CallbackPageProps {
   };
 }
 
-export default async function CallbackPage({ searchParams }: CallbackPageProps) {
+export default async function CallbackPage({
+  searchParams,
+}: CallbackPageProps) {
   const { code, error } = searchParams;
 
   if (error) {
@@ -24,20 +26,19 @@ export default async function CallbackPage({ searchParams }: CallbackPageProps) 
   try {
     // Exchange code for access token
     const tokenResponse = await workos.exchangeCodeForToken(code);
-    
+
     // Get user profile
     const userProfile = await workos.getUserProfile(tokenResponse.access_token);
-    
+
     console.log("User authenticated:", userProfile);
-    
+
     // Here you would typically:
     // 1. Save user to database
     // 2. Create session
     // 3. Set cookies
-    
+
     // For now, redirect to dashboard or home with success
     redirect("/?success=true");
-    
   } catch (error) {
     console.error("Authentication failed:", error);
     redirect("/?error=auth_failed");

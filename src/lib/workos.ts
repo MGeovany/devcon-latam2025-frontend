@@ -12,13 +12,20 @@ export class WorkOSClient {
   }
 
   /**
-   * Generate the WorkOS authorization URL
+   * Generate the WorkOS authorization URL (client-side safe)
    */
-  getAuthorizationUrl(state?: string): string {
+  static getAuthorizationUrl(state?: string): string {
+    const clientId = process.env.NEXT_PUBLIC_WORKOS_CLIENT_ID;
+    const redirectUri = process.env.NEXT_PUBLIC_WORKOS_REDIRECT_URI;
+    
+    if (!clientId || !redirectUri) {
+      throw new Error("WorkOS client configuration missing");
+    }
+
     const params = new URLSearchParams({
-      client_id: this.clientId,
-      response_type: 'code',
-      redirect_uri: this.redirectUri,
+      client_id: clientId,
+      response_type: "code",
+      redirect_uri: redirectUri,
       ...(state && { state }),
     });
 
@@ -28,15 +35,17 @@ export class WorkOSClient {
   /**
    * Exchange authorization code for access token
    */
-  async exchangeCodeForToken(code: string): Promise<{ access_token: string; user: any }> {
-    const response = await fetch('https://api.workos.com/sso/token', {
-      method: 'POST',
+  async exchangeCodeForToken(
+    code: string,
+  ): Promise<{ access_token: string; user: any }> {
+    const response = await fetch("https://api.workos.com/sso/token", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': `Bearer ${this.apiKey}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+        Authorization: `Bearer ${this.apiKey}`,
       },
       body: new URLSearchParams({
-        grant_type: 'authorization_code',
+        grant_type: "authorization_code",
         client_id: this.clientId,
         client_secret: this.apiKey,
         code,
@@ -45,7 +54,7 @@ export class WorkOSClient {
     });
 
     if (!response.ok) {
-      throw new Error('Failed to exchange code for token');
+      throw new Error("Failed to exchange code for token");
     }
 
     return response.json();
@@ -55,14 +64,14 @@ export class WorkOSClient {
    * Get user profile from WorkOS
    */
   async getUserProfile(accessToken: string): Promise<any> {
-    const response = await fetch('https://api.workos.com/userinfo', {
+    const response = await fetch("https://api.workos.com/userinfo", {
       headers: {
-        'Authorization': `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
     });
 
     if (!response.ok) {
-      throw new Error('Failed to get user profile');
+      throw new Error("Failed to get user profile");
     }
 
     return response.json();

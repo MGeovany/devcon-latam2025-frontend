@@ -13,24 +13,28 @@ A minimalist children's English learning platform with WorkOS authentication.
 ## Setup
 
 1. **Install dependencies:**
+
    ```bash
    pnpm install
    ```
 
 2. **Set up environment variables:**
    Create a `.env.local` file with the following variables:
+
    ```env
    # Database
    DATABASE_URL="postgresql://username:password@localhost:5432/database_name"
-   
+
    # WorkOS Configuration
    WORKOS_API_KEY="sk_test_your_api_key_here"
    WORKOS_CLIENT_ID="client_your_client_id_here"
    WORKOS_COOKIE_PASSWORD="your-secure-password-here-please-change-this"
+   NEXT_PUBLIC_WORKOS_CLIENT_ID="client_your_client_id_here"
    NEXT_PUBLIC_WORKOS_REDIRECT_URI="http://localhost:3000/callback"
    ```
 
 3. **Set up the database:**
+
    ```bash
    pnpm db:push
    ```
