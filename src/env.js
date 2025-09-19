@@ -11,9 +11,9 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
-    WORKOS_API_KEY: z.string().min(1),
-    WORKOS_CLIENT_ID: z.string().min(1),
-    WORKOS_COOKIE_PASSWORD: z.string().min(1),
+    WORKOS_API_KEY: z.string().min(1).optional(),
+    WORKOS_CLIENT_ID: z.string().min(1).optional(),
+    WORKOS_COOKIE_PASSWORD: z.string().min(1).optional(),
   },
 
   /**
@@ -22,8 +22,8 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_WORKOS_REDIRECT_URI: z.string().url(),
-    NEXT_PUBLIC_WORKOS_CLIENT_ID: z.string().min(1),
+    NEXT_PUBLIC_WORKOS_REDIRECT_URI: z.string().url().optional(),
+    NEXT_PUBLIC_WORKOS_CLIENT_ID: z.string().min(1).optional(),
   },
 
   /**

@@ -19,7 +19,9 @@ export class WorkOSClient {
     const redirectUri = process.env.NEXT_PUBLIC_WORKOS_REDIRECT_URI;
     
     if (!clientId || !redirectUri) {
-      throw new Error("WorkOS client configuration missing");
+      console.warn("WorkOS not configured. Please set NEXT_PUBLIC_WORKOS_CLIENT_ID and NEXT_PUBLIC_WORKOS_REDIRECT_URI");
+      // Return a placeholder URL that shows an error
+      return "/?error=workos_not_configured";
     }
 
     const params = new URLSearchParams({
