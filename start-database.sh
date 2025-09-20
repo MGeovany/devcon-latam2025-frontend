@@ -11,6 +11,7 @@
 
 # On Linux and macOS you can run this script directly - `./start-database.sh`
 
+
 # import env variables from .env
 set -a
 source .env

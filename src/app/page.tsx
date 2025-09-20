@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 export default function HomePage() {
   const router = useRouter();
   const handleWorkOSLogin = () => {
-    router.push("/");
+    router.push("/dashboard");
   };
 
   return (
